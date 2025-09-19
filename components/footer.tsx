@@ -17,18 +17,14 @@ export function Footer() {
               <Image
                 src="/images/holy-ghost-zone-logo.png"
                 alt="Holy Ghost Zone MK"
-                width={48}
-                height={48}
+                width={200}
+                height={150}
                 className="mr-3"
               />
-              <div>
-                <h3 className="text-xl font-bold">Holy Ghost Zone</h3>
-                <p className="text-sm text-gray-300">MK</p>
-              </div>
+              
             </div>
             <p className="text-gray-300 mb-6 text-pretty">
-              A vibrant community of believers dedicated to experiencing God's presence, growing in faith, and serving
-              others with love and compassion.
+              We are a community based church with a keen interest in impacting our community through transformational Christ-centered activities and programs.
             </p>
             <div className="flex space-x-4">
               <Button variant="ghost" size="sm" className="text-gray-300 hover:text-white hover:bg-white/10 p-2">
@@ -51,13 +47,18 @@ export function Footer() {
             <h4 className="text-lg font-semibold mb-6">Quick Links</h4>
             <ul className="space-y-3">
               <li>
-                <Link href="#about" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/" className="text-gray-300 hover:text-white transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="text-gray-300 hover:text-white transition-colors">
                   About Us
                 </Link>
               </li>
               <li>
                 <Link href="#events" className="text-gray-300 hover:text-white transition-colors">
-                  Events
+                  Services
                 </Link>
               </li>
               <li>
@@ -65,21 +66,7 @@ export function Footer() {
                   Teachings
                 </Link>
               </li>
-              <li>
-                <Link href="#gallery" className="text-gray-300 hover:text-white transition-colors">
-                  Gallery
-                </Link>
-              </li>
-              <li>
-                <Link href="/ministries" className="text-gray-300 hover:text-white transition-colors">
-                  Ministries
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-gray-300 hover:text-white transition-colors">
-                  Contact
-                </Link>
-              </li>
+              
             </ul>
           </div>
 
@@ -91,20 +78,20 @@ export function Footer() {
                 <Clock className="w-5 h-5 text-primary mt-0.5 mr-3 flex-shrink-0" />
                 <div>
                   <p className="font-medium">Sunday Worship</p>
-                  <p className="text-gray-300 text-sm">9:00 AM & 11:30 AM</p>
+                  <p className="text-gray-300 text-sm">9:00 AM & 11:00 AM</p>
                 </div>
               </div>
               <div className="flex items-start">
                 <Clock className="w-5 h-5 text-primary mt-0.5 mr-3 flex-shrink-0" />
                 <div>
-                  <p className="font-medium">Wednesday Prayer</p>
+                  <p className="font-medium">Wednesday Bible Study</p>
                   <p className="text-gray-300 text-sm">7:00 PM</p>
                 </div>
               </div>
               <div className="flex items-start">
                 <Clock className="w-5 h-5 text-primary mt-0.5 mr-3 flex-shrink-0" />
                 <div>
-                  <p className="font-medium">Friday Youth</p>
+                  <p className="font-medium">Friday Youth Service</p>
                   <p className="text-gray-300 text-sm">6:30 PM</p>
                 </div>
               </div>
@@ -119,17 +106,21 @@ export function Footer() {
                 <MapPin className="w-5 h-5 text-primary mt-0.5 mr-3 flex-shrink-0" />
                 <div>
                   <p className="text-gray-300 text-sm">
-                    123 Faith Street
+                    De Vere Venues Harben
                     <br />
-                    Lusaka, Zambia
+                    Tickford Street
                     <br />
-                    10101
+                    Newport Pagnell
+                    <br />
+                    Milton Keynes
+                    <br />
+                    MK16 9EY
                   </p>
                 </div>
               </div>
               <div className="flex items-center">
                 <Phone className="w-5 h-5 text-primary mr-3 flex-shrink-0" />
-                <p className="text-gray-300 text-sm">+260 123 456 789</p>
+                <p className="text-gray-300 text-sm">074 2872 2159</p>
               </div>
               <div className="flex items-center">
                 <Mail className="w-5 h-5 text-primary mr-3 flex-shrink-0" />
@@ -148,9 +139,12 @@ export function Footer() {
               © {currentYear} Holy Ghost Zone MK. All rights reserved.
             </p>
             <div className="flex items-center text-gray-400 text-sm">
-              <span>Made with</span>
-              <Heart className="w-4 h-4 text-red-500 mx-1" />
-              <span>for the Kingdom</span>
+              <span>Developed by </span>
+              
+              <Link href="https://www.sillylittletools.com" passHref>
+                <span className="hover:text-primary transition-colors cursor-pointer">&nbsp;SillyLittleTools</span>
+              </Link>
+             
             </div>
           </div>
         </div>

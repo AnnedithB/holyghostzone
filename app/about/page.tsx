@@ -1,24 +1,48 @@
+"use client"
+
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Heart, Users, BookOpen, Globe } from "lucide-react"
+import { useState } from "react"
 
 export default function AboutPage() {
+  const [activeValueTab, setActiveValueTab] = useState(0)
+  const [openDropdowns, setOpenDropdowns] = useState<number[]>([])
+
+  const toggleDropdown = (index: number) => {
+    setOpenDropdowns(prev => 
+      prev.includes(index) 
+        ? prev.filter(i => i !== index)
+        : [...prev, index]
+    )
+  }
+
   return (
     <div className="min-h-screen">
       <Header />
-      <main className="pt-24">
+      <main>
         {/* Hero Section */}
-        <section className="relative py-24 lg:py-32 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/5" />
-          <div className="container mx-auto px-6 lg:px-8 relative">
+        <section className="relative pt-32 pb-24 lg:pt-40 lg:pb-32 overflow-hidden">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url('/images/about.jpg')`
+            }}
+          />
+          
+          {/* Very Dark Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black/85 via-gray-900/80 to-black/90" />
+          
+          <div className="container mx-auto px-6 lg:px-8 relative z-10">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl lg:text-6xl font-bold text-balance mb-8 bg-gradient-to-r from-primary via-foreground to-secondary bg-clip-text text-transparent">
+              <h1 className="text-4xl lg:text-6xl font-bold text-balance mb-8 text-white">
                 About Holy Ghost Zone MK
               </h1>
-              <p className="text-xl lg:text-2xl text-muted-foreground text-balance leading-relaxed">
+              <p className="text-xl lg:text-2xl text-gray-200 text-balance leading-relaxed">
                 A vibrant community where faith meets modern life, creating space for authentic worship, meaningful
                 relationships, and spiritual growth in the heart of our city.
               </p>
@@ -31,7 +55,7 @@ export default function AboutPage() {
           <div className="container mx-auto px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
               <div>
-                <h2 className="text-3xl lg:text-4xl font-bold mb-8 text-balance">Our Mission</h2>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-balance">Our Mission</h2>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-8">
                   To create an authentic community where people can encounter God, grow in faith, and discover their
                   purpose. We believe in the transformative power of the Gospel and its ability to bring hope, healing,
@@ -61,114 +85,160 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Values */}
-        <section className="py-20 lg:py-24 bg-muted/30">
-          <div className="container mx-auto px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-balance">Our Core Values</h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-balance">
-                These values guide everything we do as a community of faith
-              </p>
-            </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {[
-                {
-                  icon: Heart,
-                  title: "Authentic Love",
-                  description: "We believe love is the foundation of all relationships and community",
-                },
-                {
-                  icon: Users,
-                  title: "Genuine Community",
-                  description: "Creating spaces where everyone belongs and can grow together",
-                },
-                {
-                  icon: BookOpen,
-                  title: "Biblical Truth",
-                  description: "Grounding our faith and practices in the timeless wisdom of Scripture",
-                },
-                {
-                  icon: Globe,
-                  title: "Global Impact",
-                  description: "Extending God's love beyond our walls to transform our world",
-                },
-              ].map((value, index) => (
-                <Card
-                  key={index}
-                  className="glass-effect border-white/20 premium-shadow hover:premium-shadow-lg transition-all duration-300"
-                >
-                  <CardContent className="p-8 text-center">
-                    <value.icon className="h-12 w-12 text-primary mx-auto mb-6" />
-                    <h3 className="text-xl font-semibold mb-4">{value.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{value.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
+         {/* Philosophical Reflection */}
+         <section className="relative py-24 lg:py-48 overflow-hidden">
+           {/* Background Image */}
+           <div 
+             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+             style={{
+               backgroundImage: `url('/images/shakespear.jpg')`
+             }}
+           />
+           
+           {/* Dark Overlay */}
+           <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-gray-900/60 to-black/80" />
+
+           {/* Content */}
+           <div className="relative z-10 container mx-auto px-6 lg:px-8">
+             <div className="max-w-4xl mx-auto text-center">
+               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white">
+                 What If You Belong Here?
+               </h2>
+             </div>
+           </div>
+         </section>
+
+         {/* Values */}
+         <section className="py-20 bg-white">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Right Column - Image */}
+              <div className="aspect-[4/3]">
+                <img 
+                  src="/images/aboutus2.jpg" 
+                  alt="Church community values" 
+                  className="w-full h-full object-cover rounded-lg"
+                />
+              </div>
+
+              {/* Left Column - Tabs */}
+              <div>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-8">
+                  Our Core Values
+                </h2>
+                
+                <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                  These values guide everything we do as a community of faith
+                </p>
+
+                {/* Tabs */}
+                <div className="space-y-2">
+                  {[
+                    "Authentic Love",
+                    "Genuine Community", 
+                    "Biblical Truth",
+                    "Global Impact"
+                  ].map((tab, tabIndex) => (
+                    <button
+                      key={tabIndex}
+                      onClick={() => setActiveValueTab(tabIndex)}
+                      className={`w-full text-left px-6 py-4 rounded-lg transition-all duration-300 ${
+                        activeValueTab === tabIndex
+                          ? 'bg-primary/10 text-primary border-l-4 border-primary'
+                          : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                      }`}
+                    >
+                      <div className="font-medium text-lg">{tab}</div>
+                      {activeValueTab === tabIndex && (
+                        <div className="w-full h-0.5 bg-primary mt-2"></div>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </section>
+
+         {/* Philosophical Reflection */}
+         <section className="relative py-24 lg:py-60 overflow-hidden">
+           {/* Background Image */}
+           <div 
+             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+             style={{
+               backgroundImage: `url('/images/aboutus3.jpg')`
+             }}
+           />
+           
+           {/* Dark Overlay */}
+           <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-gray-900/60 to-black/80" />
+
+          
+         </section>
 
         {/* Leadership */}
         <section className="py-20 lg:py-24">
           <div className="container mx-auto px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-balance">Our Leadership Team</h2>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-balance">Our Leadership Team</h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-balance">
                 Passionate leaders committed to serving our community with integrity and love
               </p>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {[
-                {
-                  name: "Pastor John Smith",
-                  role: "Senior Pastor",
-                  image: "/pastor-preaching-faith-sermon.jpg",
-                },
-                {
-                  name: "Sarah Johnson",
-                  role: "Worship Director",
-                  image: "/church-worship.png",
-                },
-                {
-                  name: "Michael Brown",
-                  role: "Youth Pastor",
-                  image: "/youth-conference-church-event.jpg",
-                },
-              ].map((leader, index) => (
-                <Card
-                  key={index}
-                  className="glass-effect border-white/20 premium-shadow hover:premium-shadow-lg transition-all duration-300"
-                >
-                  <CardContent className="p-6">
-                    <Image
-                      src={leader.image || "/placeholder.svg"}
-                      alt={leader.name}
-                      width={300}
-                      height={300}
-                      className="w-full h-64 object-cover rounded-xl mb-6"
-                    />
-                    <h3 className="text-xl font-semibold mb-2">{leader.name}</h3>
-                    <p className="text-primary font-medium">{leader.role}</p>
-                  </CardContent>
-                </Card>
-              ))}
+            <div className="max-w-4xl mx-auto">
+              <div className="space-y-0">
+                {[
+                  {
+                    title: "Senior Leadership",
+                    description: "Our senior pastors and executive team who provide spiritual guidance and overall church direction."
+                  },
+                  {
+                    title: "Ministry Directors",
+                    description: "Leaders who oversee specific ministries including worship, youth, children, and community outreach."
+                  },
+                  {
+                    title: "Elders & Deacons",
+                    description: "Spiritual leaders who provide pastoral care, counseling, and support to our church family."
+                  },
+                  {
+                    title: "Volunteer Coordinators",
+                    description: "Dedicated volunteers who organize events, manage programs, and ensure smooth church operations."
+                  },
+                  {
+                    title: "Administrative Team",
+                    description: "Support staff who handle church administration, communications, and day-to-day operations."
+                  }
+                ].map((team, index) => (
+                  <div key={index} className="border-b border-gray-200 last:border-b-0">
+                    <button
+                      onClick={() => toggleDropdown(index)}
+                      className="w-full text-left py-6 px-0 flex items-center justify-between hover:bg-gray-50 transition-colors duration-200"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0"></div>
+                        <span className="text-lg font-medium text-gray-900">{team.title}</span>
+                      </div>
+                      <div className={`text-gray-400 transition-transform duration-200 ${
+                        openDropdowns.includes(index) ? 'rotate-180' : ''
+                      }`}>
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
+                    </button>
+                    {openDropdowns.includes(index) && (
+                      <div className="pb-6 pl-6 animate-fadeIn">
+                        <p className="text-gray-600 leading-relaxed">{team.description}</p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Call to Action */}
-        <section className="py-20 lg:py-24 bg-gradient-to-r from-primary/10 via-background to-secondary/10">
-          <div className="container mx-auto px-6 lg:px-8 text-center">
-            <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-balance">Ready to Join Our Community?</h2>
-            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto text-balance">
-              We'd love to welcome you into our church family. Come as you are and discover the joy of authentic
-              community and faith.
-            </p>
-            <Button size="lg" className="premium-shadow hover:premium-shadow-lg transition-all duration-300">
-              Plan Your Visit
-            </Button>
-          </div>
-        </section>
+       
       </main>
       <Footer />
     </div>
