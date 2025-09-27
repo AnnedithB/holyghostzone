@@ -105,48 +105,74 @@ export function Header() {
         </div>
 
         {isMenuOpen && (
-          <div className="lg:hidden absolute top-full left-0 right-0 glass-effect premium-shadow-lg border-b border-white/20 animate-slide-up">
-            <nav className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
-              <div className="flex flex-col space-y-4 sm:space-y-6">
-                {navItems.map((item, index) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`transition-all duration-300 font-medium text-base sm:text-lg py-2 sm:py-3 border-b border-border/50 last:border-b-0 animate-fade-in ${
-                      isScrolled ? "text-foreground hover:text-primary" : "text-white hover:text-primary"
-                    }`}
-                    style={{ animationDelay: `${index * 100}ms` }}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
+          <div className="lg:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm">
+            <div className="absolute top-0 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-gray-200/20 shadow-xl">
+              {/* Mobile Menu Header */}
+              <div className="flex items-center justify-between px-4 py-4 border-b border-gray-200/20">
+                <Link
+                  href="/"
+                  className="flex items-center hover:opacity-80 transition-all duration-300"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <Image
+                    src="/images/holy-ghost-zone-logo.png"
+                    alt="Holy Ghost Zone MK"
+                    width={120}
+                    height={40}
+                    className="h-16 w-auto"
+                  />
+                </Link>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="w-8 h-8 rounded-lg hover:bg-gray-200/50"
+                  onClick={toggleMenu}
+                  aria-label="Close navigation menu"
+                >
+                  <X className="h-5 w-5 text-gray-700" />
+                </Button>
+              </div>
+
+              {/* Navigation Links */}
+              <nav className="px-4 py-6">
+                <div className="flex flex-col space-y-1">
+                  {navItems.map((item, index) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="block px-4 py-4 text-lg font-medium text-gray-900 hover:text-primary hover:bg-gray-50 rounded-lg transition-all duration-200 animate-fade-in"
+                      style={{ animationDelay: `${index * 50}ms` }}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
                 
                 {/* Mobile Affiliate Section */}
-                <div className="pt-4 sm:pt-6 border-t border-border/50">
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
-                    <span className="text-sm text-muted-foreground font-medium">Partner Church:</span>
+                <div className="mt-8 pt-6 border-t border-gray-200/20">
+                  <div className="flex flex-col space-y-3">
+                    <span className="text-sm text-gray-600 font-medium px-4">Partner Church</span>
                     <Link
-                      href="https://example-affiliate.com"
+                      href="https://www.rccg.org/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center space-x-3 hover:opacity-80 transition-all duration-300 group"
-                      aria-label="Visit Affiliated Church"
+                      className="flex items-center space-x-3 px-4 py-3 hover:bg-gray-50 rounded-lg transition-all duration-200 group"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       <Image
                         src="/images/affchurch.avif"
                         alt="Affiliated Church"
-                        width={80}
-                        height={24}
-                        className="h-6 w-auto group-hover:drop-shadow-lg transition-all duration-300"
+                        width={60}
+                        height={20}
+                        className="h-5 w-auto group-hover:scale-105 transition-transform duration-300"
                       />
-                      <span className="text-sm font-medium text-primary">Visit Site</span>
+                      <span className="text-sm font-medium text-primary">Visit RCCG Website</span>
                     </Link>
                   </div>
                 </div>
-              </div>
-            </nav>
+              </nav>
+            </div>
           </div>
         )}
       </div>

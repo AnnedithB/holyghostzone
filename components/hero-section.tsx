@@ -23,32 +23,38 @@ export function HeroSection() {
         />
         
         {/* Super Dark Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-black/90 via-gray-900/85 to-black/95" />
+        <div className="absolute inset-0 bg-gradient-to-br from-black/95 via-gray-900/90 to-black/98" />
+        
+        {/* Additional dramatic overlay for extra depth */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20" />
 
         {/* Sophisticated animated elements */}
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full blur-3xl animate-float" />
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-primary/15 to-secondary/15 rounded-full blur-3xl animate-float" />
           <div
-            className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-secondary/8 to-primary/8 rounded-full blur-3xl animate-float"
+            className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-secondary/12 to-primary/12 rounded-full blur-3xl animate-float"
             style={{ animationDelay: "2s" }}
           />
           <div
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-primary/6 to-secondary/6 rounded-full blur-3xl animate-float"
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-primary/8 to-secondary/8 rounded-full blur-3xl animate-float"
             style={{ animationDelay: "4s" }}
           />
         </div>
 
         {/* Premium mesh pattern */}
         <div
-          className="absolute inset-0 opacity-[0.05]"
+          className="absolute inset-0 opacity-[0.08]"
           style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.1) 1px, transparent 0)`,
-            backgroundSize: "32px 32px",
+            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.15) 1px, transparent 0)`,
+            backgroundSize: "24px 24px",
           }}
         />
 
         {/* Subtle noise texture for premium feel */}
-        <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay bg-[url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E')]"></div>
+        <div className="absolute inset-0 opacity-[0.04] mix-blend-overlay bg-[url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E')]"></div>
+        
+        {/* Additional polish - subtle vignette effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/10 via-transparent via-transparent to-black/10" />
       </div>
 
       {/* Content */}
@@ -60,7 +66,7 @@ export function HeroSection() {
             }`}
           >
             <div className="max-w-[90%] text-left">
-              <h1 className="font-bold text-balance mb-8 leading-[0.9] tracking-tight text-white text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
+              <h1 className="font-bold text-balance mb-8 leading-[0.9] tracking-tight text-white text-5xl md:text-5xl lg:text-6xl xl:text-7xl">
                 Experience the <span className="gradient-text font-black">Power</span> of{" "}
                 <span className="text-primary font-black">Faith</span>
               </h1>
