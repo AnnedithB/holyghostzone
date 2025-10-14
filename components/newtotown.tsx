@@ -33,9 +33,10 @@ export default function NewToTown() {
             <div>
               <Link 
                 href="/about"
-                className="inline-block px-8 py-3 border-2 border-black text-black font-semibold tracking-wide hover:bg-black hover:text-white transition-colors duration-300"
               >
-                LEARN MORE
+                <button className="border-2 border-black text-black px-6 md:px-8 py-3 text-xs md:text-sm font-medium uppercase tracking-wide hover:bg-black hover:text-white transition-all duration-300">
+                  Learn More
+                </button>
               </Link>
             </div>
           </div>

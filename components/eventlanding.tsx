@@ -196,14 +196,14 @@ export function EventLanding() {
                             rel="noopener noreferrer"
                             className="w-full sm:w-auto"
                           >
-                            <Button className="w-full bg-primary hover:bg-primary/90 text-white py-2 px-6 text-xs md:text-sm">
+                            <button className="w-full sm:w-auto border-2 border-primary bg-primary hover:bg-primary/90 text-white px-6 md:px-8 py-3 text-xs md:text-sm font-medium uppercase tracking-wide transition-all duration-300">
                               Join on Zoom
-                            </Button>
+                            </button>
                           </a>
                         ) : (
-                          <Button className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white py-2 px-6 text-xs md:text-sm">
+                          <button className="w-full sm:w-auto border-2 border-primary bg-primary hover:bg-primary/90 text-white px-6 md:px-8 py-3 text-xs md:text-sm font-medium uppercase tracking-wide transition-all duration-300">
                             Learn More
-                          </Button>
+                          </button>
                         )}
                       </div>
                     </div>

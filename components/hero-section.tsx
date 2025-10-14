@@ -279,14 +279,9 @@ export function HeroSection() {
                     transition={{ type: "spring", stiffness: 400, damping: 17 }}
                     className="w-full"
                   >
-                    <Button
-                      size="lg"
-                      className="w-full sm:w-auto group bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl premium-shadow-lg sm:min-w-[220px]"
-                      style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.125rem)', padding: 'clamp(0.875rem, 1.5vw, 1.5rem) clamp(2rem, 3vw, 3rem)' }}
-                    >
-                      <span className="relative z-10">Teachings</span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-primary to-orange-500 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    </Button>
+                    <button className="w-full sm:w-auto border-2 border-primary text-white bg-primary hover:bg-primary/90 px-6 md:px-8 py-3 text-xs md:text-sm font-medium uppercase tracking-wide transition-all duration-300">
+                      Teachings
+                    </button>
                   </motion.div>
                 </Link>
                 <Link href="/about" className="w-full sm:w-auto">
@@ -296,14 +291,9 @@ export function HeroSection() {
                     transition={{ type: "spring", stiffness: 400, damping: 17 }}
                     className="w-full"
                   >
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      className="w-full sm:w-auto group border-2 border-white/30 text-white hover:bg-white hover:text-gray-900 rounded-2xl bg-white/10 backdrop-blur-sm premium-shadow sm:min-w-[220px]"
-                      style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.125rem)', padding: 'clamp(0.875rem, 1.5vw, 1.5rem) clamp(2rem, 3vw, 3rem)' }}
-                    >
-                      <span>About</span>
-                    </Button>
+                    <button className="w-full sm:w-auto border-2 border-white text-white hover:bg-white hover:text-gray-900 px-6 md:px-8 py-3 text-xs md:text-sm font-medium uppercase tracking-wide transition-all duration-300">
+                      About
+                    </button>
                   </motion.div>
                 </Link>
               </motion.div>

@@ -210,11 +210,11 @@ export function AboutPreview() {
                        {section.content.description}
                      </p>
 
-                     <Link href="/about">
-                       <button className="w-full sm:w-auto border-2 border-white text-white px-8 md:px-10 py-3 md:py-4 text-xs md:text-sm font-medium uppercase tracking-wide hover:bg-white hover:text-gray-900 transition-all duration-300 rounded-lg">
-                         Learn More
-                       </button>
-                     </Link>
+                   <Link href="/about">
+                     <button className="w-full sm:w-auto border-2 border-white text-white px-6 md:px-8 py-3 text-xs md:text-sm font-medium uppercase tracking-wide hover:bg-white hover:text-gray-900 transition-all duration-300">
+                       Learn More
+                     </button>
+                   </Link>
                    </div>
                  </div>
                </section>

@@ -27,8 +27,8 @@ export default function FollowJesus() {
         </h2>
 
         <Link href="/follow-jesus">
-          <button className="border-2 border-white text-white px-10 py-4 text-sm font-semibold uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300">
-            FOLLOW JESUS
+          <button className="border-2 border-white text-white px-6 md:px-8 py-3 text-xs md:text-sm font-medium uppercase tracking-wide hover:bg-white hover:text-black transition-all duration-300">
+            Follow Jesus
           </button>
         </Link>
       </div>
