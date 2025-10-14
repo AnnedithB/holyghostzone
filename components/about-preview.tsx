@@ -68,14 +68,14 @@ export function AboutPreview() {
                   <div className="grid grid-cols-2 gap-3 md:gap-4">
                     <div className="col-span-2 aspect-[2/1] rounded-lg overflow-hidden">
                       <img 
-                        src="/images/rccg.jpg" 
+                        src="/images/rccg.JPG" 
                         alt="RCCG Church" 
                         className="w-full h-full object-cover"
                       />
                     </div>
                     <div className="aspect-square rounded-lg overflow-hidden">
                       <img 
-                        src="/images/2hgz.jpg" 
+                        src="/images/2hgz.JPG" 
                         alt="Community service" 
                         className="w-full h-full object-cover"
                       />
