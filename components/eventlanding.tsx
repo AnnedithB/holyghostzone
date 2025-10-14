@@ -23,52 +23,42 @@ export function EventLanding() {
 
   const events = [
     {
-      title: "Sunday Worship Service",
+      title: "Sunday Worship",
       date: "Every Sunday",
-      time: "9:00 AM & 11:00 AM",
-      location: "De Vere Venues Harben",
+      time: "11:00 AM",
+      location: "Delta Hotels Milton Keynes",
       description: "Join us for our main worship services. We gather to worship together, learn from Scripture, pray for one another, and create space to hear from the Spirit.",
-      image: "/images/temp.webp"
+      image: "/images/events.jpeg",
+      isZoom: false
     },
     {
-      title: "Wednesday Bible Study",
-      date: "Every Wednesday",
+      title: "Tuesday House Fellowship & Bible Study",
+      date: "Every Tuesday",
+      time: "7:30 PM",
+      location: "Meeting ID: 858 914 272 | Passcode: 141507",
+      description: "Mid-week house fellowship and Bible study sessions where we dive deeper into God's Word. Interactive study sessions with small group discussions.",
+      image: "/images/events.jpeg",
+      isZoom: true,
+      zoomLink: "https://zoom.us/j/858914272#success"
+    },
+    {
+      title: "Thursday Shiloh Hour",
+      date: "Every Thursday",
       time: "7:00 PM",
-      location: "De Vere Venues Harben",
-      description: "Mid-week Bible study sessions where we dive deeper into God's Word. Interactive study sessions with small group discussions.",
-      image: "/images/temp.webp"
-    },
-    {
-      title: "Friday Youth Service",
-      date: "Every Friday",
-      time: "6:30 PM",
-      location: "De Vere Venues Harben",
-      description: "Special services designed for our youth community. Energetic gatherings focused on relevant topics for young people and the energetic.",
-      image: "/images/temp.webp"
+      location: "Meeting ID: 858 914 272 | Passcode: 141507",
+      description: "Join us online for the Shiloh Hour - a powerful time of prayer, worship, and encountering God's presence.",
+      image: "/images/events.jpeg",
+      isZoom: true,
+      zoomLink: "https://zoom.us/j/858914272#success"
     },
     {
       title: "Community Outreach",
       date: "Monthly",
-      time: "Various Times",
+      time: "11:00 AM - 12:00 PM",
       location: "Local Community",
       description: "Community outreach programs and seasonal celebrations. Transformational Christ-centered activities that impact our local community.",
-      image: "/images/temp.webp"
-    },
-    {
-      title: "Prayer Meeting",
-      date: "Every Tuesday",
-      time: "7:30 PM",
-      location: "De Vere Venues Harben",
-      description: "Weekly prayer meetings where we come together to pray for our community, church family, and world. All are welcome to join in prayer.",
-      image: "/images/temp.webp"
-    },
-    {
-      title: "Children's Ministry",
-      date: "Every Sunday",
-      time: "10:00 AM",
-      location: "De Vere Venues Harben",
-      description: "Special programs designed for children to learn about God's love through stories, songs, and activities in a fun and engaging environment.",
-      image: "/images/temp.webp"
+      image: "/images/temp.webp",
+      isZoom: false
     }
   ]
 
@@ -106,7 +96,7 @@ export function EventLanding() {
   }
 
   return (
-    <section className="relative py-12 bg-gray-900 overflow-hidden">
+    <section className="relative pt-4 pb-8 bg-gray-900 overflow-hidden">
       {/* Blurred Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -121,48 +111,63 @@ export function EventLanding() {
       <div className="absolute inset-0 bg-gray-900/80" />
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3">
+      <div className="relative z-10 container mx-auto px-4">
+        <div className="text-center mb-6">
+          <h2 className="font-bold text-white mb-3" style={{ fontSize: 'clamp(2rem, 5.5vw, 4rem)' }}>
             Upcoming Events
           </h2>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+          <p className="text-gray-300 max-w-2xl mx-auto" style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.125rem)' }}>
             Join us for worship, fellowship, and spiritual growth.
           </p>
         </div>
 
         {/* Carousel */}
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             {/* Left Navigation Arrow */}
             <button
               onClick={prevEvent}
-              className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 flex-shrink-0"
+              className="w-10 h-10 md:w-12 md:h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 flex-shrink-0"
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
             </button>
 
             {/* Event Cards Grid */}
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {getVisibleEvents().map((event, index) => (
-                <Card key={index} className="bg-white/10 backdrop-blur-sm border-white/20 shadow-xl hover:bg-white/15 transition-all duration-300">
-                  <CardContent className="">
-                    {/* Event Image */}
-                    <div className="aspect-[4/3] rounded-lg overflow-hidden mb-4">
-                      <img 
-                        src={event.image}
-                        alt={event.title}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
+                <Card key={index} className="bg-white/10 backdrop-blur-sm border-white/20 shadow-xl hover:bg-white/15 transition-all duration-300 p-0 flex flex-col h-full">
+                  <CardContent className="p-4 flex flex-col flex-grow">
+                    {/* Event Image - Clickable for Zoom events */}
+                    {event.isZoom ? (
+                      <a 
+                        href={event.zoomLink} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="block aspect-[4/3] rounded-lg overflow-hidden mb-3 cursor-pointer"
+                      >
+                        <img 
+                          src={event.image}
+                          alt={event.title}
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        />
+                      </a>
+                    ) : (
+                      <div className="aspect-[4/3] rounded-lg overflow-hidden mb-3">
+                        <img 
+                          src={event.image}
+                          alt={event.title}
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    )}
 
                     {/* Event Details */}
-                    <div className="text-white">
-                      <h3 className="text-lg font-bold mb-3">
+                    <div className="text-white flex flex-col flex-grow">
+                      <h3 className="text-base md:text-lg font-bold mb-2 line-clamp-2">
                         {event.title}
                       </h3>
                       
-                      <div className="space-y-2 mb-4">
+                      <div className="space-y-1.5 mb-3">
                         <div className="flex items-center gap-2">
                           <Calendar className="w-3 h-3 text-primary flex-shrink-0" />
                           <span className="text-gray-300 text-xs">{event.date}</span>
@@ -175,18 +180,31 @@ export function EventLanding() {
                         
                         <div className="flex items-center gap-2">
                           <MapPin className="w-3 h-3 text-primary flex-shrink-0" />
-                          <span className="text-gray-300 text-xs">{event.location}</span>
+                          <span className="text-gray-300 text-xs line-clamp-1">{event.location}</span>
                         </div>
                       </div>
 
-                      <p className="text-gray-300 mb-4 leading-relaxed text-xs line-clamp-3">
+                      <p className="text-gray-300 mb-3 leading-relaxed text-xs line-clamp-2">
                         {event.description}
                       </p>
 
-                      <div className="flex justify-center">
-                        <Button className="w-[50%] bg-primary hover:bg-primary/90 text-white py-2 text-sm">
-                          Learn More
-                        </Button>
+                      <div className="flex justify-center mt-auto">
+                        {event.isZoom ? (
+                          <a 
+                            href={event.zoomLink} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="w-full sm:w-auto"
+                          >
+                            <Button className="w-full bg-primary hover:bg-primary/90 text-white py-2 px-6 text-xs md:text-sm">
+                              Join on Zoom
+                            </Button>
+                          </a>
+                        ) : (
+                          <Button className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white py-2 px-6 text-xs md:text-sm">
+                            Learn More
+                          </Button>
+                        )}
                       </div>
                     </div>
                   </CardContent>
@@ -197,14 +215,14 @@ export function EventLanding() {
             {/* Right Navigation Arrow */}
             <button
               onClick={nextEvent}
-              className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 flex-shrink-0"
+              className="w-10 h-10 md:w-12 md:h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 flex-shrink-0"
             >
-              <ChevronRight className="w-6 h-6" />
+              <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
             </button>
           </div>
 
           {/* Event Indicators */}
-          <div className="flex justify-center gap-2 mt-6">
+          <div className="flex justify-center gap-2 mt-4">
             {Array.from({ length: getMaxIndex() + 1 }).map((_, index) => (
               <button
                 key={index}

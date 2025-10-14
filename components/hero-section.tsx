@@ -1,24 +1,57 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { motion, useSpring } from "framer-motion"
 
 export function HeroSection() {
-  const [isVisible, setIsVisible] = useState(false)
+  // Smooth spring animations for cursor follower
+  const springConfig = { damping: 25, stiffness: 150, mass: 0.5 }
+  const cursorX = useSpring(0, springConfig)
+  const cursorY = useSpring(0, springConfig)
 
   useEffect(() => {
-    setIsVisible(true)
-  }, [])
+    const handleMouseMove = (e: MouseEvent) => {
+      cursorX.set(e.clientX - 160)
+      cursorY.set(e.clientY - 160)
+    }
+
+    window.addEventListener("mousemove", handleMouseMove)
+    return () => window.removeEventListener("mousemove", handleMouseMove)
+  }, [cursorX, cursorY])
 
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      {/* Cursor Follower - Smooth Spring Animation with Radiant Glow (Only in Hero Section) */}
+      <motion.div
+        className="pointer-events-none absolute z-30 w-80 h-80 rounded-full blur-3xl"
+        style={{
+          left: cursorX,
+          top: cursorY,
+          background: "radial-gradient(circle, rgba(246,160,35,0.35) 0%, rgba(13,163,230,0.25) 50%, transparent 70%)",
+          boxShadow: "0 0 50px rgba(246,160,35,0.4), 0 0 80px rgba(13,163,230,0.2)",
+        }}
+      />
+      
+      {/* Secondary Cursor Follower - Smaller, More Intense */}
+      <motion.div
+        className="pointer-events-none absolute z-30 w-48 h-48 rounded-full blur-2xl"
+        style={{
+          left: cursorX,
+          top: cursorY,
+          background: "radial-gradient(circle, rgba(246,160,35,0.5) 0%, rgba(255,165,0,0.3) 40%, transparent 70%)",
+          boxShadow: "0 0 30px rgba(246,160,35,0.6)",
+        }}
+        transition={{ delay: 0.05 }}
+      />
+      
       <div className="absolute inset-0">
         {/* Background Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('/images/bgimg.jpg')`
+            backgroundImage: `url('/images/bgimg.jpeg')`
           }}
         />
         
@@ -30,15 +63,74 @@ export function HeroSection() {
 
         {/* Sophisticated animated elements */}
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-primary/15 to-secondary/15 rounded-full blur-3xl animate-float" />
-          <div
-            className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-secondary/12 to-primary/12 rounded-full blur-3xl animate-float"
-            style={{ animationDelay: "2s" }}
+          <motion.div 
+            className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-primary/15 to-secondary/15 rounded-full blur-3xl"
+            animate={{
+              y: [0, -30, 0],
+              x: [0, 20, 0],
+              scale: [1, 1.1, 1],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
           />
-          <div
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-primary/8 to-secondary/8 rounded-full blur-3xl animate-float"
-            style={{ animationDelay: "4s" }}
+          <motion.div
+            className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-secondary/12 to-primary/12 rounded-full blur-3xl"
+            animate={{
+              y: [0, 40, 0],
+              x: [0, -25, 0],
+              scale: [1, 1.15, 1],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1,
+            }}
           />
+          <motion.div
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-primary/8 to-secondary/8 rounded-full blur-3xl"
+            animate={{
+              y: [0, -20, 0],
+              x: [0, 15, 0],
+              scale: [1, 1.2, 1],
+              rotate: [0, 180, 360],
+            }}
+            transition={{
+              duration: 12,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2,
+            }}
+          />
+        </div>
+        
+        {/* Floating Particles */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(15)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-primary/40 rounded-full"
+              animate={{
+                y: [0, -100, 0],
+                x: [0, Math.random() * 50 - 25, 0],
+                opacity: [0.2, 0.8, 0.2],
+                scale: [1, 1.5, 1],
+              }}
+              transition={{
+                duration: 3 + Math.random() * 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: Math.random() * 3,
+              }}
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+            />
+          ))}
         </div>
 
         {/* Premium mesh pattern */}
@@ -60,45 +152,163 @@ export function HeroSection() {
       {/* Content */}
       <div className="relative z-10 h-full flex items-center">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div
-            className={`transition-all duration-1200 ease-out ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-            }`}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="max-w-7xl"
           >
-            <div className="max-w-[90%] text-left">
-              <h1 className="font-bold text-balance mb-8 leading-[0.9] tracking-tight text-white text-5xl md:text-5xl lg:text-6xl xl:text-7xl">
-                Experience the <span className="gradient-text font-black">Power</span> of{" "}
-                <span className="text-primary font-black">Faith</span>
-              </h1>
+            <div className="w-full text-left">
+              <motion.h1 
+                className="font-bold text-balance mb-6 md:mb-8 leading-[1.1] md:leading-[0.9] tracking-tight text-white"
+                style={{ fontSize: 'clamp(2.5rem, 7vw, 5rem)' }}
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                <span style={{ whiteSpace: 'nowrap' }}>
+                  {"Experience".split('').map((char, index) => (
+                    <motion.span
+                      key={`exp-${index}`}
+                      className="inline-block cursor-default"
+                      whileHover={{
+                        textShadow: "0 0 20px rgba(246,160,35,1), 0 0 40px rgba(246,160,35,0.8)",
+                        scale: 1.1,
+                        color: "#f6a023",
+                      }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </span>{' '}
+                <span style={{ whiteSpace: 'nowrap' }}>
+                  {"the".split('').map((char, index) => (
+                    <motion.span
+                      key={`the-${index}`}
+                      className="inline-block cursor-default"
+                      whileHover={{
+                        textShadow: "0 0 20px rgba(246,160,35,1), 0 0 40px rgba(246,160,35,0.8)",
+                        scale: 1.1,
+                        color: "#f6a023",
+                      }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </span>{' '}
+                <motion.span 
+                  className="gradient-text font-black"
+                  style={{ whiteSpace: 'nowrap' }}
+                  animate={{ 
+                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                  }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                >
+                  {"Power".split('').map((char, index) => (
+                    <motion.span
+                      key={`power-${index}`}
+                      className="inline-block cursor-default"
+                      whileHover={{
+                        textShadow: "0 0 20px rgba(246,160,35,1), 0 0 40px rgba(246,160,35,0.8)",
+                        scale: 1.15,
+                      }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </motion.span>
+                {' '}
+                <span style={{ whiteSpace: 'nowrap' }}>
+                  {"of".split('').map((char, index) => (
+                    <motion.span
+                      key={`of-${index}`}
+                      className="inline-block cursor-default"
+                      whileHover={{
+                        textShadow: "0 0 20px rgba(246,160,35,1), 0 0 40px rgba(246,160,35,0.8)",
+                        scale: 1.1,
+                        color: "#f6a023",
+                      }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </span>{' '}
+                <span className="text-primary font-black" style={{ whiteSpace: 'nowrap' }}>
+                  {"Faith".split('').map((char, index) => (
+                    <motion.span
+                      key={`faith-${index}`}
+                      className="inline-block cursor-default"
+                      whileHover={{
+                        textShadow: "0 0 20px rgba(246,160,35,1), 0 0 40px rgba(246,160,35,0.8)",
+                        scale: 1.2,
+                      }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </span>
+              </motion.h1>
 
-              <p className="text-lg md:text-xl lg:text-2xl text-gray-200 text-pretty mb-12 leading-relaxed font-light">
+              <motion.p 
+                className="text-gray-200 text-pretty mb-8 md:mb-12 leading-relaxed font-light max-w-4xl"
+                style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)' }}
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
                 Join our vibrant community where modern worship meets timeless truth.
                 <br className="hidden md:block" />
                 Discover your purpose, grow in faith, and make lasting connections.
-              </p>
+              </motion.p>
 
-              <div className="flex flex-col sm:flex-row gap-6 items-start">
-                <Link href="/teachings">
-                  <Button
-                    size="lg"
-                    className="group bg-primary hover:bg-primary/90 text-primary-foreground px-12 py-6 text-lg font-semibold rounded-2xl premium-shadow-lg hover:premium-shadow transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1 min-w-[220px]"
+              <motion.div 
+                className="flex flex-col sm:flex-row gap-4 md:gap-6 items-stretch sm:items-start"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                <Link href="/teachings" className="w-full sm:w-auto">
+                  <motion.div
+                    whileHover={{ scale: 1.05, y: -5 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                    className="w-full"
                   >
-                    <span className="relative z-10">Teachings</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary to-orange-500 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  </Button>
+                    <Button
+                      size="lg"
+                      className="w-full sm:w-auto group bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl premium-shadow-lg sm:min-w-[220px]"
+                      style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.125rem)', padding: 'clamp(0.875rem, 1.5vw, 1.5rem) clamp(2rem, 3vw, 3rem)' }}
+                    >
+                      <span className="relative z-10">Teachings</span>
+                      <div className="absolute inset-0 bg-gradient-to-r from-primary to-orange-500 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    </Button>
+                  </motion.div>
                 </Link>
-                <Link href="/about">
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="group border-2 border-white/30 text-white hover:bg-white hover:text-gray-900 px-12 py-6 text-lg font-semibold rounded-2xl transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1 bg-white/10 backdrop-blur-sm premium-shadow min-w-[220px]"
+                <Link href="/about" className="w-full sm:w-auto">
+                  <motion.div
+                    whileHover={{ scale: 1.05, y: -5 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                    className="w-full"
                   >
-                    <span>About</span>
-                  </Button>
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      className="w-full sm:w-auto group border-2 border-white/30 text-white hover:bg-white hover:text-gray-900 rounded-2xl bg-white/10 backdrop-blur-sm premium-shadow sm:min-w-[220px]"
+                      style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.125rem)', padding: 'clamp(0.875rem, 1.5vw, 1.5rem) clamp(2rem, 3vw, 3rem)' }}
+                    >
+                      <span>About</span>
+                    </Button>
+                  </motion.div>
                 </Link>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 

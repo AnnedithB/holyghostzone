@@ -9,21 +9,21 @@ export function Footer() {
   return (
     <footer className="bg-slate-900 text-white">
       {/* Main Footer Content */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
           {/* Church Info */}
           <div className="lg:col-span-1">
-            <div className="flex items-center mb-6">
+            <div className="flex items-center mb-4 md:mb-6">
               <Image
                 src="/images/holy-ghost-zone-logo.png"
                 alt="Holy Ghost Zone MK"
                 width={200}
                 height={150}
-                className="mr-3"
+                className="mr-3 w-40 md:w-48 lg:w-52 h-auto"
               />
               
             </div>
-            <p className="text-gray-300 mb-6 text-pretty">
+            <p className="text-sm md:text-base text-gray-300 mb-4 md:mb-6 text-pretty">
               We are a community based church with a keen interest in impacting our community through transformational Christ-centered activities and programs.
             </p>
             <div className="flex space-x-4">
@@ -44,7 +44,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Quick Links</h4>
+            <h4 className="text-base md:text-lg font-semibold mb-4 md:mb-6">Quick Links</h4>
             <ul className="space-y-3">
               <li>
                 <Link href="/" className="text-gray-300 hover:text-white transition-colors">
@@ -72,27 +72,27 @@ export function Footer() {
 
           {/* Service Times */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Service Times</h4>
+            <h4 className="text-base md:text-lg font-semibold mb-4 md:mb-6">Service Times</h4>
             <div className="space-y-4">
               <div className="flex items-start">
                 <Clock className="w-5 h-5 text-primary mt-0.5 mr-3 flex-shrink-0" />
                 <div>
                   <p className="font-medium">Sunday Worship</p>
-                  <p className="text-gray-300 text-sm">9:00 AM & 11:00 AM</p>
+                  <p className="text-gray-300 text-sm">11:00 AM</p>
                 </div>
               </div>
               <div className="flex items-start">
                 <Clock className="w-5 h-5 text-primary mt-0.5 mr-3 flex-shrink-0" />
                 <div>
-                  <p className="font-medium">Wednesday Bible Study</p>
-                  <p className="text-gray-300 text-sm">7:00 PM</p>
+                  <p className="font-medium">Tuesday House Fellowship & Bible Study</p>
+                  <p className="text-gray-300 text-sm">7:30 PM (Zoom)</p>
                 </div>
               </div>
               <div className="flex items-start">
                 <Clock className="w-5 h-5 text-primary mt-0.5 mr-3 flex-shrink-0" />
                 <div>
-                  <p className="font-medium">Friday Youth Service</p>
-                  <p className="text-gray-300 text-sm">6:30 PM</p>
+                  <p className="font-medium">Thursday Shiloh Hour</p>
+                  <p className="text-gray-300 text-sm">7:00 PM (Zoom)</p>
                 </div>
               </div>
             </div>
@@ -100,27 +100,25 @@ export function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Contact Info</h4>
+            <h4 className="text-base md:text-lg font-semibold mb-4 md:mb-6">Contact Info</h4>
             <div className="space-y-4">
               <div className="flex items-start">
                 <MapPin className="w-5 h-5 text-primary mt-0.5 mr-3 flex-shrink-0" />
                 <div>
                   <p className="text-gray-300 text-sm">
-                    De Vere Venues Harben
+                    Delta Hotels Milton Keynes
                     <br />
-                    Tickford Street
+                    Timbold Drive, Kents Hill
                     <br />
-                    Newport Pagnell
+                    Milton Keynes, MK7 6HL
                     <br />
-                    Milton Keynes
-                    <br />
-                    MK16 9EY
+                    United Kingdom
                   </p>
                 </div>
               </div>
               <div className="flex items-center">
                 <Phone className="w-5 h-5 text-primary mr-3 flex-shrink-0" />
-                <p className="text-gray-300 text-sm">074 2872 2159</p>
+                <p className="text-gray-300 text-sm">+44 7445 423178</p>
               </div>
               <div className="flex items-center">
                 <Mail className="w-5 h-5 text-primary mr-3 flex-shrink-0" />
@@ -133,12 +131,12 @@ export function Footer() {
 
       {/* Bottom Bar */}
       <div className="border-t border-gray-800">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm mb-4 md:mb-0">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-2 md:gap-0">
+            <p className="text-gray-400 text-xs md:text-sm text-center md:text-left">
               © {currentYear} Holy Ghost Zone MK. All rights reserved.
             </p>
-            <div className="flex items-center text-gray-400 text-sm">
+            <div className="flex items-center text-gray-400 text-xs md:text-sm">
               <span>Developed by </span>
               
               <Link href="https://www.sillylittletools.com" passHref>

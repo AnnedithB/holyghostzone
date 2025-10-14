@@ -34,7 +34,7 @@ export function Header() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled ? "glass-effect premium-shadow-lg border-b border-white/20" : "bg-transparent "
+        isScrolled ? "bg-white premium-shadow-lg border-b border-gray-200" : "bg-transparent "
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -95,7 +95,9 @@ export function Header() {
             <Button
               variant="ghost"
               size="sm"
-              className="lg:hidden w-10 h-10 sm:w-12 sm:h-12 rounded-xl glass-effect premium-shadow hover:bg-primary/10 transition-all duration-300"
+              className={`lg:hidden w-10 h-10 sm:w-12 sm:h-12 rounded-xl hover:bg-primary/10 transition-all duration-300 ${
+                isScrolled ? "text-gray-900" : "text-white"
+              }`}
               onClick={toggleMenu}
               aria-label="Toggle navigation menu"
             >

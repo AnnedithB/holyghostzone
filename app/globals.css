@@ -65,29 +65,38 @@
     @apply bg-background text-foreground;
   }
 
-  /* Enhanced typography */
+  /* Enhanced typography with fluid scaling */
   h1 {
-    @apply text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
     line-height: 1.1;
+    letter-spacing: -0.02em;
   }
 
   h2 {
-    @apply text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight;
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    font-weight: 700;
     line-height: 1.2;
+    letter-spacing: -0.02em;
   }
 
   h3 {
-    @apply text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 700;
     line-height: 1.3;
+    letter-spacing: -0.02em;
   }
 
   h4 {
-    @apply text-xl md:text-2xl lg:text-3xl font-bold tracking-tight;
+    font-size: clamp(1.25rem, 2.5vw, 2rem);
+    font-weight: 700;
     line-height: 1.4;
+    letter-spacing: -0.02em;
   }
 
   p {
     @apply leading-relaxed;
+    font-size: clamp(0.875rem, 1.5vw, 1.125rem);
   }
 
   .text-balance {
@@ -96,6 +105,18 @@
 
   .text-pretty {
     text-wrap: pretty;
+  }
+
+  /* Fluid spacing utilities */
+  .fluid-section {
+    padding-top: clamp(3rem, 8vw, 5rem);
+    padding-bottom: clamp(3rem, 8vw, 5rem);
+  }
+
+  .fluid-container {
+    max-width: min(90%, 1400px);
+    margin-left: auto;
+    margin-right: auto;
   }
 
   /* Premium visual effects */

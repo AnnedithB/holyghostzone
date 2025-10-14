@@ -4,37 +4,37 @@ import { Button } from "@/components/ui/button"
 export function EventsSection() {
   const events = [
     {
-      title: "Sunday Worship Service",
+      title: "Sunday Worship",
       description:
         "Join us for an inspiring time of worship, prayer, and biblical teaching. Experience the presence of God in a welcoming community atmosphere.",
       date: "Every Sunday",
-      time: "9:00 AM & 11:00 AM",
-      location: "Main Sanctuary",
+      time: "11:00 AM",
+      location: "Delta Hotels Milton Keynes",
       image: "/church-worship.png",
       attendees: 250,
       category: "Worship",
     },
     {
-      title: "Youth Conference 2024",
+      title: "Tuesday House Fellowship & Bible Study",
       description:
-        "A powerful weekend conference designed for young people to encounter God, build friendships, and discover their purpose in Christ.",
-      date: "March 15-17, 2024",
-      time: "6:00 PM - 9:00 PM",
-      location: "Youth Center",
+        "Join us online for house fellowship and Bible study. A time of deep study, prayer, and community building.",
+      date: "Every Tuesday",
+      time: "7:30 PM (Zoom)",
+      location: "Online",
       image: "/youth-conference-church-event.jpg",
       attendees: 120,
-      category: "Conference",
+      category: "Fellowship",
     },
     {
-      title: "Community Outreach",
+      title: "Thursday Shiloh Hour",
       description:
-        "Join us as we serve our local community through food distribution, prayer, and sharing God's love with those in need.",
-      date: "March 23, 2024",
-      time: "10:00 AM - 2:00 PM",
-      location: "Community Center",
+        "Join us online for the Shiloh Hour - a powerful time of prayer, worship, and encountering God's presence.",
+      date: "Every Thursday",
+      time: "7:00 PM (Zoom)",
+      location: "Online",
       image: "/community-outreach-volunteer-service.jpg",
       attendees: 80,
-      category: "Outreach",
+      category: "Worship",
     },
   ]
 

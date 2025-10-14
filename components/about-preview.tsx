@@ -3,6 +3,9 @@
 import { Button } from "@/components/ui/button"
 import { Church, BookOpen, Calendar } from "lucide-react"
 import { useState } from "react"
+import Link from "next/link"
+import NewToTown from "@/components/newtotown"
+import FollowJesus from "@/components/followjesus"
 
 export function AboutPreview() {
   const [activeServiceTab, setActiveServiceTab] = useState(0)
@@ -43,9 +46,9 @@ export function AboutPreview() {
       content: {
         description: "Join us for worship, fellowship, and spiritual growth. We offer multiple service times to accommodate different schedules.",
         details: [
-          "Sunday Worship: 9:00 AM & 11:00 AM",
-          "Wednesday Bible Study: 7:00 PM",
-          "Friday Youth Service: 6:30 PM",
+          "Sunday Worship: 11:00 AM",
+          "Tuesday House Fellowship & Bible Study: 7:30 PM (Zoom)",
+          "Thursday Shiloh Hour: 7:00 PM (Zoom)",
           "Special events and community programs"
         ]
       }
@@ -58,35 +61,28 @@ export function AboutPreview() {
         // Special layout for "Who We Are" section
         if (section.title === "Who We Are") {
           return (
-            <section key={index} className="py-20 bg-white">
+            <section key={index} className="py-12 md:py-20 bg-white">
               <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
                   {/* Left Column - Image Grid */}
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="aspect-square">
+                  <div className="grid grid-cols-2 gap-3 md:gap-4">
+                    <div className="col-span-2 aspect-[2/1] rounded-lg overflow-hidden">
                       <img 
-                        src="/church-worship.png" 
-                        alt="Church worship" 
+                        src="/images/rccg.jpg" 
+                        alt="RCCG Church" 
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <div className="aspect-square">
+                    <div className="aspect-square rounded-lg overflow-hidden">
                       <img 
-                        src="/prayer-worship-hands-raised.jpg" 
-                        alt="Prayer and worship" 
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="aspect-square">
-                      <img 
-                        src="/community-outreach-volunteer-service.jpg" 
+                        src="/images/2hgz.jpg" 
                         alt="Community service" 
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <div className="aspect-square">
+                    <div className="aspect-square rounded-lg overflow-hidden">
                       <img 
-                        src="/pastor-preaching-faith-sermon.jpg" 
+                        src="/images/3hgz.png" 
                         alt="Pastor preaching" 
                         className="w-full h-full object-cover"
                       />
@@ -95,58 +91,59 @@ export function AboutPreview() {
 
                   {/* Right Column - Content */}
                   <div>
-                     <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-8">
+                     <h2 className="font-bold text-gray-900 mb-6 md:mb-8" style={{ fontSize: 'clamp(2rem, 5.5vw, 4rem)' }}>
                        {section.title}
                      </h2>
                     
-                    <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                    <p className="text-gray-600 mb-6 md:mb-8 leading-relaxed" style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.125rem)' }}>
                       {section.content.description}
                     </p>
                     
-                    <div className="space-y-4 mb-8">
-                      <div className="text-gray-700">
-                        <strong>Times:</strong> Sunday 9:00 AM & 11:00 AM, Wednesday 7:00 PM, Friday 6:30 PM
+                    <div className="space-y-3 md:space-y-4 mb-6 md:mb-8">
+                      <div className="text-sm md:text-base text-gray-700">
+                        <strong>Times:</strong> Sunday 11:00 AM, Tuesday 7:30 PM (Zoom), Thursday 7:00 PM (Zoom)
                       </div>
-                      <div className="text-gray-700">
-                        <strong>Location:</strong> De Vere Venues Harben, Tickford Street, Newport Pagnell, Milton Keynes, MK16 9EY
+                      <div className="text-sm md:text-base text-gray-700">
+                        <strong>Location:</strong> Delta Hotels Milton Keynes, Timbold Drive, Kents Hill, Milton Keynes, MK7 6HL, United Kingdom
                       </div>
                     </div>
 
-                    <button className="border-2 border-gray-900 text-gray-900 px-8 py-3 text-sm font-medium uppercase tracking-wide hover:bg-gray-900 hover:text-white transition-all duration-300">
-                      Learn More
-                    </button>
+                    <Link href="/events">
+                      <button className="w-full sm:w-auto border-2 border-gray-900 text-gray-900 px-6 md:px-8 py-3 text-xs md:text-sm font-medium uppercase tracking-wide hover:bg-gray-900 hover:text-white transition-all duration-300">
+                        Learn More
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>
             </section>
           )
         }
-
          // Special layout for "Our Services" section
          if (section.title === "Our Services") {
            const serviceTabs = [
-             "Sunday Worship",
-             "Wednesday Bible Study", 
-             "Friday Youth Service",
-             "Special Events"
-           ]
+            "Sunday Worship: 11:00 AM",
+            "Tuesday House Fellowship & Bible Study: 7:30 PM (Zoom)",
+            "Thursday Shiloh Hour: 7:00 PM (Zoom)",
+            "Special events and community programs"
+          ]
 
            return (
-             <section key={index} className="py-20 bg-white">
+             <section key={index} className="py-12 md:py-20 bg-white">
                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
                    {/* Left Column - Tabs */}
                    <div>
-                     <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-8">
+                     <h2 className="font-bold text-gray-900 mb-6 md:mb-8" style={{ fontSize: 'clamp(2rem, 5.5vw, 4rem)' }}>
                        {section.title}
                      </h2>
                      
-                     <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                     <p className="text-gray-600 mb-6 md:mb-8 leading-relaxed" style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.125rem)' }}>
                        {section.content.description}
                      </p>
 
                      {/* Tabs */}
-                     <div className="space-y-2">
+                     <div className="space-y-2 mb-6 md:mb-8">
                        {serviceTabs.map((tab, tabIndex) => (
                          <button
                            key={tabIndex}
@@ -164,6 +161,12 @@ export function AboutPreview() {
                          </button>
                        ))}
                      </div>
+
+                     <Link href="/events">
+                       <button className="w-full sm:w-auto border-2 border-gray-900 text-gray-900 px-6 md:px-8 py-3 text-xs md:text-sm font-medium uppercase tracking-wide hover:bg-gray-900 hover:text-white transition-all duration-300">
+                         View All Events
+                       </button>
+                     </Link>
                    </div>
 
                    {/* Right Column - Image */}
@@ -183,31 +186,41 @@ export function AboutPreview() {
          // Special layout for "What We Believe" section
          if (section.title === "What We Believe") {
            return (
-             <section key={index} className="relative h-[60vh] flex items-center justify-center overflow-hidden">
-               {/* Background Image */}
-               <div 
-                 className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                 style={{
-                   backgroundImage: `url('${section.backgroundImage}')`
-                 }}
-               />
-               
-               {/* Dark Overlay */}
-               <div className="absolute inset-0 bg-gradient-to-br from-gray-900/95 via-gray-800/90 to-gray-900/98" />
+             <>
+               <section key={index} className="relative min-h-[50vh] md:h-[60vh] flex items-center justify-center overflow-hidden py-16 md:py-0">
+                 {/* Background Image */}
+                 <div 
+                   className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                   style={{
+                     backgroundImage: `url('${section.backgroundImage}')`
+                   }}
+                 />
+                 
+                 {/* Dark Overlay */}
+                 <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 via-gray-800/60 to-gray-900/75" />
 
-               {/* Content */}
-               <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
-                 <div className="max-w-4xl mx-auto text-center">
-                   <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8">
-                     {section.title}
-                   </h2>
-                   
-                   <p className="text-xl md:text-2xl text-gray-200 leading-relaxed max-w-3xl mx-auto">
-                     {section.content.description}
-                   </p>
+                 {/* Content */}
+                 <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+                   <div className="max-w-4xl mx-auto text-center">
+                     <h2 className="font-bold text-white mb-6 md:mb-8" style={{ fontSize: 'clamp(2rem, 5.5vw, 4rem)' }}>
+                       {section.title}
+                     </h2>
+                     
+                     <p className="text-gray-200 leading-relaxed max-w-3xl mx-auto mb-8 md:mb-12" style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)' }}>
+                       {section.content.description}
+                     </p>
+
+                     <Link href="/about">
+                       <button className="w-full sm:w-auto border-2 border-white text-white px-8 md:px-10 py-3 md:py-4 text-xs md:text-sm font-medium uppercase tracking-wide hover:bg-white hover:text-gray-900 transition-all duration-300 rounded-lg">
+                         Learn More
+                       </button>
+                     </Link>
+                   </div>
                  </div>
-               </div>
-             </section>
+               </section>
+               <NewToTown />
+               <FollowJesus />
+             </>
            )
          }
 

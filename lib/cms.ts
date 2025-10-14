@@ -58,9 +58,9 @@ export interface ChurchInfo {
     website?: string
   }
   serviceTimes: {
-    sunday: string[]
-    wednesday: string
-    friday: string
+    sunday: string
+    tuesday: string
+    thursday: string
   }
   socialMedia: {
     facebook?: string
@@ -77,20 +77,20 @@ export const mockChurchInfo: ChurchInfo = {
   description:
     "A vibrant community of believers dedicated to experiencing God's presence, growing in faith, and serving others with love and compassion.",
   address: {
-    street: "123 Faith Street",
-    city: "Lusaka",
-    country: "Zambia",
-    postalCode: "10101",
+    street: "Delta Hotels Milton Keynes, Timbold Drive, Kents Hill",
+    city: "Milton Keynes",
+    country: "United Kingdom",
+    postalCode: "MK7 6HL",
   },
   contact: {
-    phone: "+260 123 456 789",
+    phone: "+44 7445 423178",
     email: "info@holyghostzonemk.org",
     website: "https://holyghostzonemk.org",
   },
   serviceTimes: {
-    sunday: ["9:00 AM", "11:30 AM"],
-    wednesday: "7:00 PM",
-    friday: "6:30 PM",
+    sunday: "11:00 AM",
+    tuesday: "7:30 PM (Zoom)",
+    thursday: "7:00 PM (Zoom)",
   },
   socialMedia: {
     facebook: "https://facebook.com/holyghostzonemk",
@@ -103,11 +103,11 @@ export const mockChurchInfo: ChurchInfo = {
 export const mockEvents: Event[] = [
   {
     id: "1",
-    title: "Sunday Worship Service",
+    title: "Sunday Worship",
     description:
       "Join us for a powerful time of worship, prayer, and biblical teaching as we gather to honor God together.",
     date: "2024-01-21",
-    time: "9:00 AM",
+    time: "11:00 AM",
     location: "Main Sanctuary",
     category: "worship",
     image: "/church-worship.png",
@@ -116,28 +116,26 @@ export const mockEvents: Event[] = [
   },
   {
     id: "2",
-    title: "Youth Conference 2024",
+    title: "Tuesday House Fellowship & Bible Study",
     description:
-      "A transformative weekend for young people featuring dynamic speakers, worship, and fellowship opportunities.",
-    date: "2024-02-15",
-    time: "6:00 PM",
-    location: "Youth Center",
-    category: "youth",
+      "Join us online for house fellowship and Bible study. A time of deep study, prayer, and community building.",
+    date: "2024-01-23",
+    time: "7:30 PM (Zoom)",
+    location: "Online",
+    category: "fellowship",
     image: "/youth-conference-church-event.jpg",
     attendees: 120,
     featured: true,
-    registrationRequired: true,
-    registrationUrl: "/register/youth-conference",
   },
   {
     id: "3",
-    title: "Community Outreach",
+    title: "Thursday Shiloh Hour",
     description:
-      "Serving our local community with food distribution, prayer, and practical support for families in need.",
-    date: "2024-01-28",
-    time: "10:00 AM",
-    location: "Community Center",
-    category: "outreach",
+      "Join us online for the Shiloh Hour - a powerful time of prayer, worship, and encountering God's presence.",
+    date: "2024-01-25",
+    time: "7:00 PM (Zoom)",
+    location: "Online",
+    category: "worship",
     image: "/community-outreach-volunteer-service.jpg",
     attendees: 80,
   },
