@@ -1,15 +1,36 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { motion, useSpring } from "framer-motion"
+
+interface HeroData {
+  title: string
+  subtitle: string
+  backgroundImage: string
+  primaryButtonText: string
+  primaryButtonLink: string
+  secondaryButtonText: string
+  secondaryButtonLink: string
+}
 
 export function HeroSection() {
   // Smooth spring animations for cursor follower
   const springConfig = { damping: 25, stiffness: 150, mass: 0.5 }
   const cursorX = useSpring(0, springConfig)
   const cursorY = useSpring(0, springConfig)
+
+  // Hero data state
+  const [heroData, setHeroData] = useState<HeroData>({
+    title: 'Experience the Power of Faith',
+    subtitle: 'Join our vibrant community where modern worship meets timeless truth. Discover your purpose, grow in faith, and make lasting connections.',
+    backgroundImage: '/images/bgimg.jpeg',
+    primaryButtonText: 'Teachings',
+    primaryButtonLink: '/teachings',
+    secondaryButtonText: 'About',
+    secondaryButtonLink: '/about',
+  })
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -20,6 +41,27 @@ export function HeroSection() {
     window.addEventListener("mousemove", handleMouseMove)
     return () => window.removeEventListener("mousemove", handleMouseMove)
   }, [cursorX, cursorY])
+
+  // Load hero data from API
+  useEffect(() => {
+    const loadHeroData = async () => {
+      try {
+        const response = await fetch('/api/pages/home')
+        if (!response.ok) {
+          console.error('Failed to load hero data')
+          return
+        }
+        const data = await response.json()
+        if (data.hero) {
+          setHeroData(data.hero)
+        }
+      } catch (error) {
+        console.error('Error loading hero data:', error)
+      }
+    }
+
+    loadHeroData()
+  }, [])
 
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
@@ -51,7 +93,7 @@ export function HeroSection() {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('/images/bgimg.jpeg')`
+            backgroundImage: `url('${heroData.backgroundImage}')`
           }}
         />
         
@@ -109,28 +151,37 @@ export function HeroSection() {
         
         {/* Floating Particles */}
         <div className="absolute inset-0 pointer-events-none">
-          {[...Array(15)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-2 h-2 bg-primary/40 rounded-full"
-              animate={{
-                y: [0, -100, 0],
-                x: [0, Math.random() * 50 - 25, 0],
-                opacity: [0.2, 0.8, 0.2],
-                scale: [1, 1.5, 1],
-              }}
-              transition={{
-                duration: 3 + Math.random() * 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: Math.random() * 3,
-              }}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-            />
-          ))}
+          {[...Array(15)].map((_, i) => {
+            // Use deterministic values based on index to avoid hydration mismatch
+            const xOffset = ((i * 37) % 50) - 25; // Deterministic x offset
+            const duration = 3 + ((i * 17) % 40) / 10; // Deterministic duration 3-7s
+            const delay = (i * 23) % 30 / 10; // Deterministic delay 0-3s
+            const left = ((i * 47) % 100); // Deterministic left position
+            const top = ((i * 67) % 100); // Deterministic top position
+            
+            return (
+              <motion.div
+                key={i}
+                className="absolute w-2 h-2 bg-primary/40 rounded-full"
+                animate={{
+                  y: [0, -100, 0],
+                  x: [0, xOffset, 0],
+                  opacity: [0.2, 0.8, 0.2],
+                  scale: [1, 1.5, 1],
+                }}
+                transition={{
+                  duration,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay,
+                }}
+                style={{
+                  left: `${left}%`,
+                  top: `${top}%`,
+                }}
+              />
+            );
+          })}
         </div>
 
         {/* Premium mesh pattern */}
@@ -261,9 +312,7 @@ export function HeroSection() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                Join our vibrant community where modern worship meets timeless truth.
-                <br className="hidden md:block" />
-                Discover your purpose, grow in faith, and make lasting connections.
+                {heroData.subtitle}
               </motion.p>
 
               <motion.div 
@@ -272,7 +321,7 @@ export function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
               >
-                <Link href="/teachings" className="w-full sm:w-auto">
+                <Link href={heroData.primaryButtonLink} className="w-full sm:w-auto">
                   <motion.div
                     whileHover={{ scale: 1.05, y: -5 }}
                     whileTap={{ scale: 0.95 }}
@@ -280,11 +329,11 @@ export function HeroSection() {
                     className="w-full"
                   >
                     <button className="w-full sm:w-auto border-2 border-primary text-white bg-primary hover:bg-primary/90 px-6 md:px-8 py-3 text-xs md:text-sm font-medium uppercase tracking-wide transition-all duration-300">
-                      Teachings
+                      {heroData.primaryButtonText}
                     </button>
                   </motion.div>
                 </Link>
-                <Link href="/about" className="w-full sm:w-auto">
+                <Link href={heroData.secondaryButtonLink} className="w-full sm:w-auto">
                   <motion.div
                     whileHover={{ scale: 1.05, y: -5 }}
                     whileTap={{ scale: 0.95 }}
@@ -292,7 +341,7 @@ export function HeroSection() {
                     className="w-full"
                   >
                     <button className="w-full sm:w-auto border-2 border-white text-white hover:bg-white hover:text-gray-900 px-6 md:px-8 py-3 text-xs md:text-sm font-medium uppercase tracking-wide transition-all duration-300">
-                      About
+                      {heroData.secondaryButtonText}
                     </button>
                   </motion.div>
                 </Link>

@@ -1,3 +1,6 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { GalleryGrid } from "@/components/gallery-grid"
@@ -6,50 +9,53 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Camera, Users, Heart, Calendar } from "lucide-react"
 
 export default function GalleryPage() {
-  const galleryImages = [
-    {
-      id: 1,
-      src: "/images/fillerevents.jpg",
-      alt: "Sunday worship service with congregation in praise",
-      title: "Sunday Worship Service",
-      category: "Worship",
+  const [pageData, setPageData] = useState({
+    hero: {
+      title: 'Photo Gallery',
+      subtitle: 'Capturing moments of worship, fellowship, and community life that showcase the heart and spirit of Holy Ghost Zone MK.',
+      backgroundImage: '/prayer-worship-hands-raised.jpg'
     },
-    {
-      id: 2,
-      src: "/youth-conference-church-event.jpg",
-      alt: "Youth conference with young people engaged in worship",
-      title: "Youth Conference",
-      category: "Youth",
+    recentTitle: 'Recent Highlights',
+    recentSubtitle: 'A collection of our most recent and memorable moments',
+    reflection: {
+      title: 'What If Every Moment Matters?',
+      backgroundImage: '/images/temp.webp'
     },
-    {
-      id: 3,
-      src: "/community-outreach-volunteer-service.jpg",
-      alt: "Community outreach volunteers serving together",
-      title: "Community Outreach",
-      category: "Outreach",
-    },
-    {
-      id: 4,
-      src: "/church-worship.png",
-      alt: "Church sanctuary during worship service",
-      title: "Church Sanctuary",
-      category: "Worship",
-    },
-    {
-      id: 5,
-      src: "/pastor-preaching-faith-sermon.jpg",
-      alt: "Pastor delivering inspiring sermon",
-      title: "Pastor Preaching",
-      category: "Teaching",
-    },
-    {
-      id: 6,
-      src: "/images/fillerevents.jpg",
-      alt: "Congregation in worship and prayer",
-      title: "Prayer & Worship",
-      category: "Prayer",
-    },
-  ]
+    galleryImages: [
+      {
+        id: 1,
+        src: '/images/fillerevents.jpg',
+        alt: 'Sunday worship service with congregation in praise',
+        title: 'Sunday Worship Service',
+        category: 'Worship'
+      }
+    ]
+  })
+
+  useEffect(() => {
+    loadPageData();
+  }, []);
+
+  const loadPageData = async () => {
+    try {
+      const response = await fetch('/api/pages/gallery');
+      if (!response.ok) {
+        console.error('Failed to load page data');
+        return;
+      }
+      const data = await response.json();
+      if (Object.keys(data).length > 0) {
+        setPageData(prevData => ({
+          ...prevData,
+          ...data
+        }));
+      }
+    } catch (error) {
+      console.error('Error loading page data:', error);
+    }
+  };
+
+  const galleryImages = pageData.galleryImages || []
 
   return (
     <div className="min-h-screen">
@@ -61,7 +67,7 @@ export default function GalleryPage() {
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: `url('/prayer-worship-hands-raised.jpg')`
+              backgroundImage: `url('${pageData.hero.backgroundImage}')`
             }}
           />
           
@@ -71,11 +77,10 @@ export default function GalleryPage() {
           <div className="container mx-auto px-6 lg:px-8 relative z-10">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="font-bold text-balance mb-8 leading-[0.9] tracking-tight text-white text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
-                Photo Gallery
+                {pageData.hero.title}
               </h1>
               <p className="text-lg md:text-xl lg:text-2xl text-gray-200 text-pretty mb-12 leading-relaxed font-light">
-                Capturing moments of worship, fellowship, and community life that showcase the heart and spirit of Holy
-                Ghost Zone MK.
+                {pageData.hero.subtitle}
               </p>
             </div>
           </div>
@@ -85,9 +90,9 @@ export default function GalleryPage() {
         <section className="py-20 lg:py-24">
           <div className="container mx-auto px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="font-bold text-balance mb-6 leading-[0.9] tracking-tight text-3xl md:text-4xl lg:text-5xl xl:text-6xl">Recent Highlights</h2>
+              <h2 className="font-bold text-balance mb-6 leading-[0.9] tracking-tight text-3xl md:text-4xl lg:text-5xl xl:text-6xl">{pageData.recentTitle}</h2>
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty leading-relaxed font-light">
-                A collection of our most recent and memorable moments
+                {pageData.recentSubtitle}
               </p>
             </div>
             <GalleryGrid images={galleryImages} />
@@ -100,7 +105,7 @@ export default function GalleryPage() {
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: `url('/images/temp.webp')`
+              backgroundImage: `url('${pageData.reflection.backgroundImage}')`
             }}
           />
           
@@ -111,7 +116,7 @@ export default function GalleryPage() {
           <div className="relative z-10 container mx-auto px-6 lg:px-8">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="font-bold text-balance leading-[0.9] tracking-tight text-white text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
-                What If Every Moment Matters?
+                {pageData.reflection.title}
               </h2>
             </div>
           </div>

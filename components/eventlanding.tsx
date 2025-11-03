@@ -5,9 +5,40 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Calendar, MapPin, Clock, ChevronLeft, ChevronRight } from "lucide-react"
 
+interface EventsData {
+  title: string;
+  buttonText: string;
+  buttonLink: string;
+  cardsPerView?: {
+    mobile: number;
+    tablet: number;
+    desktop: number;
+  };
+}
+
 export function EventLanding() {
   const [currentEvent, setCurrentEvent] = useState(0)
   const [windowWidth, setWindowWidth] = useState(0)
+  const [eventsData, setEventsData] = useState<EventsData>({
+    title: "Upcoming Events",
+    buttonText: "View All Events",
+    buttonLink: "/events",
+    cardsPerView: {
+      mobile: 1,
+      tablet: 2,
+      desktop: 3,
+    },
+  });
+  const [eventsList, setEventsList] = useState<Array<{
+    title: string;
+    date: string;
+    time: string;
+    location: string;
+    description: string;
+    image: string;
+    isZoom?: boolean;
+    zoomLink?: string;
+  }> | null>(null)
 
   useEffect(() => {
     const handleResize = () => {
@@ -21,7 +52,54 @@ export function EventLanding() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const events = [
+  useEffect(() => {
+    const loadPageData = async () => {
+      try {
+        // Fetch events data from the events page API
+        const eventsResponse = await fetch('/api/pages/events');
+        const homeResponse = await fetch('/api/pages/home');
+        
+        if (eventsResponse.ok) {
+          const eventsData = await eventsResponse.json();
+          if (Array.isArray(eventsData.specialEvents)) {
+            // Convert events page format to EventLanding format
+            const convertedEvents = eventsData.specialEvents.map((event: any) => ({
+              title: event.title,
+              date: event.date,
+              time: event.time,
+              location: event.location,
+              description: event.description,
+              image: event.image,
+              isZoom: false, // Events page doesn't have Zoom info, so default to false
+              zoomLink: event.zoomLink || undefined
+            }));
+            setEventsList(convertedEvents);
+          }
+        }
+        
+        if (homeResponse.ok) {
+          const homeData = await homeResponse.json();
+          if (homeData.events) {
+            setEventsData((prev) => ({
+              ...prev,
+              ...homeData.events,
+              cardsPerView: {
+                mobile: homeData.events?.cardsPerView?.mobile ?? prev.cardsPerView?.mobile ?? 1,
+                tablet: homeData.events?.cardsPerView?.tablet ?? prev.cardsPerView?.tablet ?? 2,
+                desktop: homeData.events?.cardsPerView?.desktop ?? prev.cardsPerView?.desktop ?? 3,
+              }
+            }));
+          }
+        }
+      } catch (error) {
+        console.error('Error loading page data:', error);
+      }
+    };
+
+    loadPageData();
+  }, [])
+
+  const fallbackEvents = [
     {
       title: "Sunday Worship",
       date: "Every Sunday",
@@ -63,26 +141,27 @@ export function EventLanding() {
   ]
 
   const getVisibleEvents = () => {
-    // For mobile: show 1 event, tablet: 2 events, desktop: 3 events
     const isMobile = windowWidth < 768
     const isTablet = windowWidth >= 768 && windowWidth < 1024
-    
-    let eventsToShow = 3 // desktop default
-    if (isMobile) eventsToShow = 1
-    else if (isTablet) eventsToShow = 2
-    
-    return events.slice(currentEvent, currentEvent + eventsToShow)
+    const cards = isMobile
+      ? (eventsData.cardsPerView?.mobile ?? 1)
+      : isTablet
+        ? (eventsData.cardsPerView?.tablet ?? 2)
+        : (eventsData.cardsPerView?.desktop ?? 3)
+    const list = eventsList && eventsList.length > 0 ? eventsList : fallbackEvents
+    return list.slice(currentEvent, currentEvent + cards)
   }
 
   const getMaxIndex = () => {
     const isMobile = windowWidth < 768
     const isTablet = windowWidth >= 768 && windowWidth < 1024
-    
-    let eventsToShow = 3 // desktop default
-    if (isMobile) eventsToShow = 1
-    else if (isTablet) eventsToShow = 2
-    
-    return events.length - eventsToShow
+    const cards = isMobile
+      ? (eventsData.cardsPerView?.mobile ?? 1)
+      : isTablet
+        ? (eventsData.cardsPerView?.tablet ?? 2)
+        : (eventsData.cardsPerView?.desktop ?? 3)
+    const listLength = (eventsList && eventsList.length > 0 ? eventsList : fallbackEvents).length
+    return Math.max(0, listLength - cards)
   }
 
   const nextEvent = () => {
@@ -114,7 +193,7 @@ export function EventLanding() {
       <div className="relative z-10 container mx-auto px-4">
         <div className="text-center mb-6">
           <h2 className="font-bold text-white mb-3" style={{ fontSize: 'clamp(2rem, 5.5vw, 4rem)' }}>
-            Upcoming Events
+            {eventsData.title}
           </h2>
           <p className="text-gray-300 max-w-2xl mx-auto" style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.125rem)' }}>
             Join us for worship, fellowship, and spiritual growth.

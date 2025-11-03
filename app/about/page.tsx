@@ -6,11 +6,94 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Heart, Users, BookOpen, Globe } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export default function AboutPage() {
   const [activeValueTab, setActiveValueTab] = useState(0)
   const [openDropdowns, setOpenDropdowns] = useState<number[]>([])
+  const [pageData, setPageData] = useState({
+    hero: {
+      title: 'About Holy Ghost Zone MK',
+      subtitle: 'A vibrant community where faith meets modern life, creating space for authentic worship, meaningful relationships, and spiritual growth in the heart of our city.',
+      backgroundImage: '/images/about.jpg'
+    },
+    mission: {
+      title: 'Our Mission',
+      description: 'To create an authentic community where people can encounter God, grow in faith, and discover their purpose. We believe in the transformative power of the Gospel and its ability to bring hope, healing, and restoration to every life.',
+      image: '/church-worship.png',
+      stat1: '500+',
+      stat1Label: 'Community Members',
+      stat2: '15+',
+      stat2Label: 'Years Serving'
+    },
+    reflection: {
+      title: 'What If You Belong Here?',
+      backgroundImage: '/images/shakespear.jpg'
+    },
+    values: {
+      title: 'Our Core Values',
+      subtitle: 'These values guide everything we do as a community of faith',
+      image: '/images/aboutus2.jpg',
+      tabs: [
+        'Authentic Love',
+        'Genuine Community',
+        'Biblical Truth',
+        'Global Impact'
+      ]
+    },
+    reflection2: {
+      backgroundImage: '/images/aboutus3.jpg'
+    },
+    leadership: {
+      title: 'Our Leadership Team',
+      subtitle: 'Passionate leaders committed to serving our community with integrity and love',
+      teams: [
+        {
+          title: 'Senior Leadership',
+          description: 'Our senior pastors and executive team who provide spiritual guidance and overall church direction.'
+        },
+        {
+          title: 'Ministry Directors',
+          description: 'Leaders who oversee specific ministries including worship, youth, children, and community outreach.'
+        },
+        {
+          title: 'Elders & Deacons',
+          description: 'Spiritual leaders who provide pastoral care, counseling, and support to our church family.'
+        },
+        {
+          title: 'Volunteer Coordinators',
+          description: 'Dedicated volunteers who organize events, manage programs, and ensure smooth church operations.'
+        },
+        {
+          title: 'Administrative Team',
+          description: 'Support staff who handle church administration, communications, and day-to-day operations.'
+        }
+      ]
+    }
+  })
+
+  useEffect(() => {
+    loadPageData();
+  }, []);
+
+  const loadPageData = async () => {
+    try {
+      const response = await fetch('/api/pages/about');
+      if (!response.ok) {
+        console.error('Failed to load page data');
+        return;
+      }
+      const data = await response.json();
+      if (Object.keys(data).length > 0) {
+        setPageData(prevData => ({
+          ...prevData,
+          ...data
+        }));
+      }
+    } catch (error) {
+      console.error('Error loading page data:', error);
+    }
+  };
 
   const toggleDropdown = (index: number) => {
     setOpenDropdowns(prev => 
@@ -30,7 +113,7 @@ export default function AboutPage() {
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: `url('/images/about.jpg')`
+              backgroundImage: `url('${pageData.hero.backgroundImage}')`
             }}
           />
           
@@ -40,11 +123,10 @@ export default function AboutPage() {
           <div className="container mx-auto px-6 lg:px-8 relative z-10">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-4xl lg:text-6xl font-bold text-balance mb-8 text-white">
-                About Holy Ghost Zone MK
+                {pageData.hero.title}
               </h1>
               <p className="text-xl lg:text-2xl text-gray-200 text-balance leading-relaxed">
-                A vibrant community where faith meets modern life, creating space for authentic worship, meaningful
-                relationships, and spiritual growth in the heart of our city.
+                {pageData.hero.subtitle}
               </p>
             </div>
           </div>
@@ -55,26 +137,24 @@ export default function AboutPage() {
           <div className="container mx-auto px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
               <div>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-balance">Our Mission</h2>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-balance">{pageData.mission.title}</h2>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                  To create an authentic community where people can encounter God, grow in faith, and discover their
-                  purpose. We believe in the transformative power of the Gospel and its ability to bring hope, healing,
-                  and restoration to every life.
+                  {pageData.mission.description}
                 </p>
                 <div className="grid grid-cols-2 gap-6">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-primary mb-2">500+</div>
-                    <div className="text-sm text-muted-foreground">Community Members</div>
+                    <div className="text-3xl font-bold text-primary mb-2">{pageData.mission.stat1}</div>
+                    <div className="text-sm text-muted-foreground">{pageData.mission.stat1Label}</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-primary mb-2">15+</div>
-                    <div className="text-sm text-muted-foreground">Years Serving</div>
+                    <div className="text-3xl font-bold text-primary mb-2">{pageData.mission.stat2}</div>
+                    <div className="text-sm text-muted-foreground">{pageData.mission.stat2Label}</div>
                   </div>
                 </div>
               </div>
               <div className="relative">
                 <Image
-                  src="/church-worship.png"
+                  src={pageData.mission.image}
                   alt="Church community worship"
                   width={600}
                   height={400}
@@ -91,7 +171,7 @@ export default function AboutPage() {
            <div 
              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
              style={{
-               backgroundImage: `url('/images/shakespear.jpg')`
+               backgroundImage: `url('${pageData.reflection.backgroundImage}')`
              }}
            />
            
@@ -102,20 +182,20 @@ export default function AboutPage() {
            <div className="relative z-10 container mx-auto px-6 lg:px-8">
              <div className="max-w-4xl mx-auto text-center">
                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white">
-                 What If You Belong Here?
+                 {pageData.reflection.title}
                </h2>
              </div>
            </div>
          </section>
 
          {/* Values */}
-         <section className="py-20 bg-white">
+        <section className="py-20 bg-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Right Column - Image */}
               <div className="aspect-[4/3]">
                 <img 
-                  src="/images/aboutus2.jpg" 
+                  src={pageData.values.image}
                   alt="Church community values" 
                   className="w-full h-full object-cover rounded-lg"
                 />
@@ -124,21 +204,16 @@ export default function AboutPage() {
               {/* Left Column - Tabs */}
               <div>
                 <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-8">
-                  Our Core Values
+                  {pageData.values.title}
                 </h2>
                 
                 <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                  These values guide everything we do as a community of faith
+                  {pageData.values.subtitle}
                 </p>
 
                 {/* Tabs */}
                 <div className="space-y-2">
-                  {[
-                    "Authentic Love",
-                    "Genuine Community", 
-                    "Biblical Truth",
-                    "Global Impact"
-                  ].map((tab, tabIndex) => (
+                  {pageData.values.tabs.map((tab, tabIndex) => (
                     <button
                       key={tabIndex}
                       onClick={() => setActiveValueTab(tabIndex)}
@@ -166,7 +241,7 @@ export default function AboutPage() {
            <div 
              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
              style={{
-               backgroundImage: `url('/images/aboutus3.jpg')`
+               backgroundImage: `url('${pageData.reflection2.backgroundImage}')`
              }}
            />
            
@@ -180,35 +255,14 @@ export default function AboutPage() {
         <section className="py-20 lg:py-24">
           <div className="container mx-auto px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-balance">Our Leadership Team</h2>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-balance">{pageData.leadership.title}</h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-balance">
-                Passionate leaders committed to serving our community with integrity and love
+                {pageData.leadership.subtitle}
               </p>
             </div>
             <div className="max-w-4xl mx-auto">
               <div className="space-y-0">
-                {[
-                  {
-                    title: "Senior Leadership",
-                    description: "Our senior pastors and executive team who provide spiritual guidance and overall church direction."
-                  },
-                  {
-                    title: "Ministry Directors",
-                    description: "Leaders who oversee specific ministries including worship, youth, children, and community outreach."
-                  },
-                  {
-                    title: "Elders & Deacons",
-                    description: "Spiritual leaders who provide pastoral care, counseling, and support to our church family."
-                  },
-                  {
-                    title: "Volunteer Coordinators",
-                    description: "Dedicated volunteers who organize events, manage programs, and ensure smooth church operations."
-                  },
-                  {
-                    title: "Administrative Team",
-                    description: "Support staff who handle church administration, communications, and day-to-day operations."
-                  }
-                ].map((team, index) => (
+                {pageData.leadership.teams.map((team, index) => (
                   <div key={index} className="border-b border-gray-200 last:border-b-0">
                     <button
                       onClick={() => toggleDropdown(index)}

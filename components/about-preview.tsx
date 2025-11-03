@@ -2,13 +2,92 @@
 
 import { Button } from "@/components/ui/button"
 import { Church, BookOpen, Calendar } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import NewToTown from "@/components/newtotown"
 import FollowJesus from "@/components/followjesus"
 
+interface WhoWeAreData {
+  description: string;
+  locationText: string;
+  serviceTimes: string;
+  buttonText: string;
+  buttonLink: string;
+  images: string[];
+}
+
+interface WhatWeBelieveData {
+  title: string;
+  description: string;
+  backgroundImage: string;
+  buttonText: string;
+  buttonLink: string;
+}
+
+interface OurServicesData {
+  description: string;
+  serviceTabs: string[];
+  backgroundImage: string;
+  buttonText: string;
+  buttonLink: string;
+}
+
 export function AboutPreview() {
   const [activeServiceTab, setActiveServiceTab] = useState(0)
+  const [whoWeAreData, setWhoWeAreData] = useState<WhoWeAreData>({
+    description: "We are a community based church with a keen interest in impacting our community through transformational Christ-centered activities and programs.",
+    locationText: "Delta Hotels Milton Keynes, Timbold Drive, Kents Hill, Milton Keynes, MK7 6HL, United Kingdom",
+    serviceTimes: "Sunday 11:00 AM, Tuesday 7:30 PM (Zoom), Thursday 7:00 PM (Zoom)",
+    buttonText: "Learn More",
+    buttonLink: "/events",
+    images: ["/images/rccg.JPG", "/images/2hgz.JPG", "/images/3hgz.png"]
+  });
+  const [whatWeBelieveData, setWhatWeBelieveData] = useState<WhatWeBelieveData>({
+    title: "What We Believe",
+    description: "Our faith is grounded in the Bible and centered on Jesus Christ. We believe in the power of God's love to transform lives and communities.",
+    backgroundImage: "/images/whoweare.jpg",
+    buttonText: "Learn More",
+    buttonLink: "/about"
+  });
+  const [ourServicesData, setOurServicesData] = useState<OurServicesData>({
+    description: "Join us for worship, fellowship, and spiritual growth. We offer multiple service times to accommodate different schedules.",
+    serviceTabs: [
+      "Sunday Worship: 11:00 AM",
+      "Tuesday House Fellowship & Bible Study: 7:30 PM (Zoom)",
+      "Thursday Shiloh Hour: 7:00 PM (Zoom)",
+      "Special events and community programs"
+    ],
+    backgroundImage: "/images/services.jpg",
+    buttonText: "View All Events",
+    buttonLink: "/events"
+  });
+
+  useEffect(() => {
+    const loadPageData = async () => {
+      try {
+        const response = await fetch('/api/pages/home');
+        if (!response.ok) {
+          console.error('Failed to load page data');
+          return;
+        }
+        const data = await response.json();
+        
+        if (data.whoWeAre) {
+          setWhoWeAreData(data.whoWeAre);
+        }
+        if (data.whatWeBelieve) {
+          setWhatWeBelieveData(data.whatWeBelieve);
+        }
+        if (data.ourServices) {
+          setOurServicesData(data.ourServices);
+        }
+      } catch (error) {
+        console.error('Error loading page data:', error);
+      }
+    };
+
+    loadPageData();
+  }, []);
 
   const sections = [
     {
@@ -16,7 +95,7 @@ export function AboutPreview() {
       icon: Church,
       backgroundImage: "/church-worship.png",
       content: {
-        description: "We are a community based church with a keen interest in impacting our community through transformational Christ-centered activities and programs.",
+        description: whoWeAreData.description,
         details: [
           "A welcoming community of believers",
           "Committed to serving our local area",
@@ -28,9 +107,9 @@ export function AboutPreview() {
     {
       title: "What We Believe",
       icon: BookOpen,
-      backgroundImage: "/images/whoweare.jpg",
+      backgroundImage: whatWeBelieveData.backgroundImage,
       content: {
-        description: "Our faith is grounded in the Bible and centered on Jesus Christ. We believe in the power of God's love to transform lives and communities.",
+        description: whatWeBelieveData.description,
         details: [
           "The Bible as the inspired Word of God",
           "Jesus Christ as Lord and Savior",
@@ -42,15 +121,10 @@ export function AboutPreview() {
     {
       title: "Our Services",
       icon: Calendar,
-      backgroundImage: "/images/services.jpg",
+      backgroundImage: ourServicesData.backgroundImage,
       content: {
-        description: "Join us for worship, fellowship, and spiritual growth. We offer multiple service times to accommodate different schedules.",
-        details: [
-          "Sunday Worship: 11:00 AM",
-          "Tuesday House Fellowship & Bible Study: 7:30 PM (Zoom)",
-          "Thursday Shiloh Hour: 7:00 PM (Zoom)",
-          "Special events and community programs"
-        ]
+        description: ourServicesData.description,
+        details: ourServicesData.serviceTabs
       }
     },
   ]
@@ -68,21 +142,21 @@ export function AboutPreview() {
                   <div className="grid grid-cols-2 gap-3 md:gap-4">
                     <div className="col-span-2 aspect-[2/1] rounded-lg overflow-hidden">
                       <img 
-                        src="/images/rccg.JPG" 
+                        src={whoWeAreData.images[0] || "/images/rccg.JPG"} 
                         alt="RCCG Church" 
                         className="w-full h-full object-cover"
                       />
                     </div>
                     <div className="aspect-square rounded-lg overflow-hidden">
                       <img 
-                        src="/images/2hgz.JPG" 
+                        src={whoWeAreData.images[1] || "/images/2hgz.JPG"} 
                         alt="Community service" 
                         className="w-full h-full object-cover"
                       />
                     </div>
                     <div className="aspect-square rounded-lg overflow-hidden">
                       <img 
-                        src="/images/3hgz.png" 
+                        src={whoWeAreData.images[2] || "/images/3hgz.png"} 
                         alt="Pastor preaching" 
                         className="w-full h-full object-cover"
                       />
@@ -101,16 +175,16 @@ export function AboutPreview() {
                     
                     <div className="space-y-3 md:space-y-4 mb-6 md:mb-8">
                       <div className="text-sm md:text-base text-gray-700">
-                        <strong>Times:</strong> Sunday 11:00 AM, Tuesday 7:30 PM (Zoom), Thursday 7:00 PM (Zoom)
+                        <strong>Times:</strong> {whoWeAreData.serviceTimes}
                       </div>
                       <div className="text-sm md:text-base text-gray-700">
-                        <strong>Location:</strong> Delta Hotels Milton Keynes, Timbold Drive, Kents Hill, Milton Keynes, MK7 6HL, United Kingdom
+                        <strong>Location:</strong> {whoWeAreData.locationText}
                       </div>
                     </div>
 
-                    <Link href="/events">
+                    <Link href={whoWeAreData.buttonLink}>
                       <button className="w-full sm:w-auto border-2 border-gray-900 text-gray-900 px-6 md:px-8 py-3 text-xs md:text-sm font-medium uppercase tracking-wide hover:bg-gray-900 hover:text-white transition-all duration-300">
-                        Learn More
+                        {whoWeAreData.buttonText}
                       </button>
                     </Link>
                   </div>
@@ -121,13 +195,6 @@ export function AboutPreview() {
         }
          // Special layout for "Our Services" section
          if (section.title === "Our Services") {
-           const serviceTabs = [
-            "Sunday Worship: 11:00 AM",
-            "Tuesday House Fellowship & Bible Study: 7:30 PM (Zoom)",
-            "Thursday Shiloh Hour: 7:00 PM (Zoom)",
-            "Special events and community programs"
-          ]
-
            return (
              <section key={index} className="py-12 md:py-20 bg-white">
                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -144,7 +211,7 @@ export function AboutPreview() {
 
                      {/* Tabs */}
                      <div className="space-y-2 mb-6 md:mb-8">
-                       {serviceTabs.map((tab, tabIndex) => (
+                       {ourServicesData.serviceTabs.map((tab, tabIndex) => (
                          <button
                            key={tabIndex}
                            onClick={() => setActiveServiceTab(tabIndex)}
@@ -162,9 +229,9 @@ export function AboutPreview() {
                        ))}
                      </div>
 
-                     <Link href="/events">
+                     <Link href={ourServicesData.buttonLink}>
                        <button className="w-full sm:w-auto border-2 border-gray-900 text-gray-900 px-6 md:px-8 py-3 text-xs md:text-sm font-medium uppercase tracking-wide hover:bg-gray-900 hover:text-white transition-all duration-300">
-                         View All Events
+                         {ourServicesData.buttonText}
                        </button>
                      </Link>
                    </div>
@@ -172,7 +239,7 @@ export function AboutPreview() {
                    {/* Right Column - Image */}
                    <div className="aspect-[4/3]">
                      <img 
-                       src="/images/services.jpg" 
+                       src={ourServicesData.backgroundImage} 
                        alt="Church service" 
                        className="w-full h-full object-cover rounded-lg"
                      />
@@ -186,8 +253,8 @@ export function AboutPreview() {
          // Special layout for "What We Believe" section
          if (section.title === "What We Believe") {
            return (
-             <>
-               <section key={index} className="relative min-h-[50vh] md:h-[60vh] flex items-center justify-center overflow-hidden py-16 md:py-0">
+             <div key={index}>
+               <section className="relative min-h-[50vh] md:h-[60vh] flex items-center justify-center overflow-hidden py-16 md:py-0">
                  {/* Background Image */}
                  <div 
                    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -210,9 +277,9 @@ export function AboutPreview() {
                        {section.content.description}
                      </p>
 
-                   <Link href="/about">
+                   <Link href={whatWeBelieveData.buttonLink}>
                      <button className="w-full sm:w-auto border-2 border-white text-white px-6 md:px-8 py-3 text-xs md:text-sm font-medium uppercase tracking-wide hover:bg-white hover:text-gray-900 transition-all duration-300">
-                       Learn More
+                       {whatWeBelieveData.buttonText}
                      </button>
                    </Link>
                    </div>
@@ -220,7 +287,7 @@ export function AboutPreview() {
                </section>
                <NewToTown />
                <FollowJesus />
-             </>
+             </div>
            )
          }
 
@@ -255,14 +322,14 @@ export function AboutPreview() {
                    {section.content.description}
                  </p>
                  
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-                   {section.content.details.map((detail, detailIndex) => (
-                     <div key={detailIndex} className="flex items-start gap-4 p-6 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
-                       <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                       <span className="text-white text-lg">{detail}</span>
-                     </div>
-                   ))}
-                 </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                  {section.content.details.map((detail, detailIndex) => (
+                    <div key={`detail-${index}-${detailIndex}`} className="flex items-start gap-4 p-6 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
+                      <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                      <span className="text-white text-lg">{detail}</span>
+                    </div>
+                  ))}
+                </div>
                </div>
              </div>
            </section>
